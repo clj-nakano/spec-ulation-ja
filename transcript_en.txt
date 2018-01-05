@@ -1,0 +1,3398 @@
+00:01
+hi every human yeah
+00:06
+once again it's fantastic to come to the
+00:10
+cons and see everybody old friends and
+00:13
+all the new faces and everybody being so
+00:17
+happy that's really great I think you
+00:23
+know it's just so important to revisit
+00:25
+the fact that the community is a
+00:27
+positive one that's you know full of
+00:30
+optimistic people or crazy people who
+00:34
+are like willing to try this new stuff
+00:36
+and and do things in a way that that's
+00:39
+different and to help out other people
+00:42
+who are similarly optimistic or crazy so
+00:49
+this talk is called speculation and
+00:53
+that's just a way of covering the fact
+00:56
+that it's a rant
+01:02
+so I think we have a few talks about
+01:05
+spec and there was a spec workshop and
+01:08
+so this is not a talk about spec it's
+01:11
+not a tutorial about spec it's not about
+01:13
+the tech of spec sort of in any way but
+01:17
+it is very much a talk about what spec
+01:19
+is about because I'm not sure when you
+01:24
+look at spec and what especially when
+01:26
+you hear our talk and you see you can do
+01:27
+this and you know it's a floor wax it's
+01:29
+dessert topping that it's evident
+01:33
+necessarily that particularly that some
+01:37
+of the design decisions are pointed at
+01:39
+these these two things which seem to not
+01:43
+say very much at all one is that spec is
+01:46
+about being able to give something to
+01:49
+someone so that they can use it and the
+01:53
+important thing about that that that
+01:55
+word use is that it's sort of like a
+01:57
+positive thing here's something you can
+01:59
+use as opposed to like here's some rules
+02:03
+that you have to follow so we want to be
+02:06
+able to give people things that they can
+02:08
+use and you know Stu talked about
+02:09
+getting you know a piece of code that
+02:11
+had no documentation or insufficient
+02:14
+documentation and wondering you know
+02:17
+what what should these Maps be what are
+02:18
+the keys and things like that so it's
+02:20
+hard to use that without more of a
+02:23
+description so it's about that but the
+02:26
+other side of it and again this is not
+02:28
+about you the user doing something wrong
+02:31
+it's about me the provider saying I'm
+02:33
+going to make a commitment this is the
+02:35
+way this thing works and in particular
+02:39
+the commitment means and I'm not going
+02:42
+to take that away later so I want to
+02:45
+emphasize that today and that spec is
+02:49
+designed around that and it's sort of
+02:50
+part of a bigger problem which is change
+02:54
+it's interesting to look at spec and say
+02:57
+spec is about doing this this way or
+03:00
+doing that that way or providing these
+03:02
+things but spec is really about being
+03:04
+able to change later a lot of what spec
+03:08
+is is oriented towards changing things
+03:11
+later but it's an important question
+03:12
+because I had a conversation just two
+03:14
+a where the word change was used a ton
+03:16
+of times we use the word change to sort
+03:18
+of cover a lot of things that happen in
+03:22
+software development and one question we
+03:24
+need to answer is is is the thing and if
+03:29
+it's a thing is it a thing that we want
+03:31
+in our software development lives so of
+03:36
+course you know I think this happened
+03:38
+yet today on surprise but here we go
+03:41
+the mandatory definition of a word I was
+03:45
+very surprised by this like everybody
+03:49
+says analyzed before I do my talking go
+03:51
+to Wikipedia to make sure I don't say
+03:52
+something you know obvious or obviously
+03:54
+wrong so I go to the dictionary and so
+03:58
+the definition for change is sort of
+03:59
+circular and that one of these two words
+04:02
+has the word change in it as well but
+04:04
+the origins of the word we're actually
+04:05
+exchanged it was about barter right you
+04:09
+can turn a cow into wheat how people
+04:12
+play euro games oh well you know you can
+04:17
+turn cows into wheat and wheat into wood
+04:19
+and wood into stone apparently these
+04:23
+things lead to great success in the
+04:24
+Middle Ages so that's not transmutation
+04:29
+right that's not like stuff changing in
+04:31
+places look exchanging stuff and when
+04:34
+you think about that way you can say
+04:36
+well what does it mean to just change
+04:37
+something without somebody's permission
+04:40
+or cooperation or participation right
+04:44
+one one way to say is that you just took
+04:47
+something from them but at least it's
+04:50
+not something that's nice but I think
+04:55
+that in practice we have things changed
+04:58
+on us and we experienced this last line
+05:01
+by how many people have ever chased down
+05:03
+dependency problems how many people
+05:07
+enjoyed that
+05:11
+okay so what are we going to do right
+05:16
+it's not like software should be
+05:17
+immutable that's not that's not the
+05:20
+thing but how do we move it forward
+05:23
+right so I'd like to find some different
+05:25
+words and change in this particular case
+05:26
+how do we make it better and different
+05:29
+tomorrow in a way that you know our
+05:33
+consumers can tolerate or at least can
+05:37
+we consider that when we when we make it
+05:39
+better so we all know how we do change
+05:43
+right we use maven or something that
+05:47
+drives maven and we have artifacts which
+05:51
+are libraries and the library and our
+05:53
+application says I want to use these
+05:55
+libraries a B and C and these are the
+05:59
+versions I want and then library a says
+06:02
+oh but I need library X to work and this
+06:04
+is the version I want and I need library
+06:07
+Y to work and this is a version I want
+06:09
+library B says I also need library Y and
+06:12
+I want a different version and library C
+06:15
+says I want library Z so we have a
+06:18
+little conflict here 2.1 and 2.4 i don't
+06:22
+know if you can read that you can
+06:24
+imagine what it says something that's in
+06:27
+conflict and the Maven has some rules
+06:30
+that automatically make this work
+06:32
+usually it will pick the later think 2.4
+06:35
+it is and this tree right the our
+06:40
+immediate dependencies and the
+06:42
+transitive dependencies are the things
+06:44
+we need to have our program run right
+06:49
+you all know better than to answer yes
+06:53
+no rhetorical questions with it yes no
+06:57
+no right so the first thing is that
+07:01
+artifacts don't use anything right the
+07:06
+library doesn't use a library at that
+07:09
+level right because artifacts are not
+07:13
+doing anything right they're just
+07:20
+so they don't use the other artifacts
+07:22
+they have these lists of them for
+07:24
+various reasons we'll talk about the
+07:26
+other thing is there's nothing in the
+07:28
+code at least in closure and I think in
+07:29
+most languages that use this
+07:31
+infrastructure there's nothing in the
+07:33
+code about these artifacts these are the
+07:36
+two things to know so what does your
+07:40
+application actually need and so we'll
+07:45
+look at this problem again and we've
+07:46
+expanded it a little bit so we look
+07:48
+inside each of those artifacts what do
+07:52
+we see if there are closure artifacts we
+07:55
+see namespaces right I give you this jar
+07:58
+it's got a bunch of namespaces in it
+08:00
+we're at Java code there would be
+08:03
+packages in there by the same kind of
+08:06
+thing namespaces packages so there's a
+08:08
+bunch of them and in fact our app is
+08:11
+decomposed similarly right our app
+08:13
+starts with a couple of namespaces that
+08:14
+we wrote in our application space now
+08:17
+those namespaces do say requires right
+08:22
+so my app Ralph's namespace requires a
+08:26
+Riki namespace and my app Ralph's name
+08:31
+space requires see Fred namespace and
+08:35
+App Trixie requires be Lucy and then and
+08:40
+that's in code that's nice so we can see
+08:43
+it in our program at least and then we
+08:45
+go down and we say a Ricky needs why
+08:49
+Barney somebody else had some names oh
+08:52
+this morning Paula did these are
+08:57
+different TV shows apparently so we have
+08:59
+Barney and Wilma and for anybody who has
+09:03
+good eyesight so this is the truth right
+09:06
+this is the actual namespace requiring
+09:09
+namespace or importing package right and
+09:12
+now this is in code and these are the
+09:14
+actual connections between the things
+09:17
+right
+09:21
+well what with anybody's good site I say
+09:24
+what can you tell about this right now
+09:26
+already about our app needing XY and Z
+09:32
+we don't need Z right
+09:36
+only Ethel uses Z and the app doesn't
+09:42
+use Ethel so it's actually the same
+09:48
+thing right name spaces are not code
+09:52
+they don't do anything right there
+09:55
+requires well obviously name spaces
+09:58
+could be effective also you could
+09:59
+require something for a side effect but
+10:00
+if we set that aside the namespace
+10:03
+declaration that says require is not
+10:05
+actually trying to accomplish anything
+10:07
+itself so they don't really use that we
+10:10
+like the fact that we can see this in
+10:12
+the code but we have this other niggling
+10:15
+I would hope niggling problem with this
+10:18
+which is that how do we know which
+10:20
+namespaces are in which artifacts are in
+10:23
+which jars yeah I don't know somebody
+10:30
+tells us right we have and we meet
+10:32
+somewhere else treat you like did you
+10:33
+try this jar man it's got Fred in it
+10:38
+I'm loving it no really there's not a
+10:42
+place right where we keep this so that's
+10:45
+a problem so what's the truth the truth
+10:49
+is you need better and better eyesight
+10:51
+to solve this problem so we open it up a
+10:56
+little bit more and we look inside Ralph
+10:59
+and we see that Ralph actually has
+11:00
+functions in it there's a function foo
+11:02
+inside our app in our Ralph's namespace
+11:05
+and we also see the beauty of namespaces
+11:07
+here because I just got tired of making
+11:09
+up new names and I didn't want to get
+11:11
+into TV shows so like every namespace as
+11:13
+a foo and a bar function but they're
+11:14
+conflict free because namespaces are
+11:16
+awesome right so Ralph foo calls Riki
+11:19
+foo and Riki foo calls Barney foo and
+11:23
+Riki bar calls Fred bar right and so on
+11:28
+and so forth these are the actual calls
+11:30
+that are made these are the actual
+11:34
+dependencies right code that needs to
+11:39
+run needs other code in order to work
+11:42
+that's the truth so we can also see that
+11:47
+right because those calls are evident
+11:49
+but one thing that's not evident there's
+11:51
+no purple lines but in the in the legend
+11:55
+there's purple which is that we depend
+11:58
+for instance we see that Ralph foo
+12:00
+depends on Ricky foo the function to
+12:04
+exist but there are other details about
+12:07
+that call right
+12:09
+what does Ralph ooh pastor Ricky foo
+12:12
+well maybe that changes over time I
+12:15
+don't really know what is Ricky foo
+12:17
+returned to Ralph foo and all callers
+12:20
+well maybe maybe that changes over time
+12:23
+that stuff is invisible right because
+12:27
+maybe you start consuming it tomorrow or
+12:29
+and it's very subtle what you use of the
+12:32
+return value especially when we start
+12:33
+returning maps and then for people with
+12:36
+really excellent eyesight what else do
+12:38
+we discover now from this we don't need
+12:43
+X right Ralph
+12:46
+foo calls
+12:48
+a Ricky foo it never calls Ricky bar and
+12:51
+Ricky bar was the only thing that needed
+12:53
+X so this is already like not great
+12:58
+right it's not our dependency tree is
+13:02
+not really reflecting our actual or
+13:04
+actual needs another thing that's going
+13:06
+on here in the bottom and I'm not going
+13:08
+to talk too much about it except to say
+13:09
+that there are also internal calls right
+13:13
+so inside library why Barney bar calls
+13:17
+Betty foo that needs to match but nobody
+13:24
+can see that in the direct tree
+13:27
+necessarily but we do want to make sure
+13:29
+that those things match and that's one
+13:31
+of the advantages of pulling in an
+13:35
+entire library is that you know the
+13:37
+stuff will match even if you're getting
+13:39
+way more stuff than you need whatever
+13:41
+stuff you need you know should match so
+13:48
+this is not great but you know
+13:49
+supposedly this is not a problem one of
+13:53
+the reasons why is because we have
+13:54
+semantic versioning and in the semantic
+13:57
+versioning spec which has been versioned
+13:59
+by the way and and I had to walk through
+14:05
+like a ton of dips to like see what had
+14:09
+changed over time mostly I guess because
+14:11
+I don't know how to use git but there
+14:15
+wasn't like a summary of what's
+14:16
+different between the two things but
+14:19
+it's in version and of course when you
+14:21
+start versioning your versioning but
+14:27
+supposedly right we have these rules we
+14:30
+have major versions and if a major
+14:31
+version doesn't transition we have this
+14:33
+implication that it should still work is
+14:36
+this what happens in practice has
+14:38
+anybody ever bumped to Depp in order to
+14:40
+make a leaf a library visible to an
+14:44
+application yeah everybody at some point
+14:49
+has done this yes this is the answer yes
+14:51
+we all do this it's okay yes no this is
+14:55
+what happened this isn't what isn't what
+14:57
+happens we're bumping versions all the
+14:59
+time right something we use
+15:01
+is better somehow in a way that our code
+15:03
+does not care that doesn't change our
+15:05
+code at all we get our new DEP changes
+15:08
+our name change the name of the thing
+15:10
+that clocks to us and so on and so on
+15:12
+and so forth this is a lie
+15:14
+all right this cascading version bumping
+15:17
+happens all the time we're just trying
+15:19
+to communicate through this palm tree
+15:22
+through this thing and I will call this
+15:25
+a level violation we're going to talk
+15:26
+about levels now so what is actually
+15:31
+happening well there's a few different
+15:33
+there's a stratification of problems
+15:35
+here right if we start at the bottom
+15:37
+right this call truth we know that
+15:40
+functions call other functions by name
+15:43
+what is happening at the next and and
+15:45
+that's you know it's clear in fact if
+15:47
+you just treated the namespace
+15:49
+declarations as aliasing when I forget
+15:53
+about code loading if they were just
+15:54
+aliasing they tell you enough they would
+15:57
+tell an analysis tool enough to know
+15:59
+when you said foo over here you were
+16:01
+talking about Ricky's foo and therefore
+16:04
+you you need to know about what Ricky's
+16:06
+foo the the actual requires is just
+16:10
+creating an execution context in which
+16:13
+that call will work that the code for
+16:16
+Ricky's foo will be available and that
+16:19
+requires will do that it will also make
+16:21
+a whole bunch of other code you don't
+16:22
+call available but we know it will cover
+16:25
+your need so we put that in our code so
+16:29
+it creates a context if we go up another
+16:31
+level to the artifacts the same thing is
+16:34
+happening those palms are saying I need
+16:37
+these other libraries they create a
+16:40
+context in which those requires are
+16:42
+going to succeed that this this thing
+16:44
+requires this other library this other
+16:46
+namespace that will be there because
+16:48
+somebody on the street told us that if I
+16:51
+use this jar Fred will be there and
+16:54
+therefore it will work but the problem
+16:58
+that's really broken is that this last
+16:59
+level the person on the street told us
+17:03
+to do this is pure magic right there's
+17:07
+nothing in code about this thing and
+17:09
+that it's going to come back later
+17:10
+so we now understand the levels this
+17:13
+functions calling functions name space
+17:15
+requires artifacts so why do we do this
+17:22
+what happen you know like what is this
+17:23
+doing for us I mean I don't think it's
+17:25
+you know just inherently terrible but
+17:28
+what is what is happening can we
+17:29
+disentangle what we're trying to say so
+17:31
+why do we put things in our depths or
+17:33
+pom or a project file at all and one is
+17:38
+that we need the codes when we're
+17:40
+working right we're writing our app
+17:41
+we're not writing this library it used
+17:44
+to be before we had depths that we would
+17:47
+like download jars and we would make
+17:49
+clasp as ourselves and say use this
+17:52
+classpath it actually wasn't worse than
+17:56
+this to be honest with you because
+17:59
+there's something about a list that you
+18:00
+made and you know what's in it and you
+18:02
+know what's not in it and you know it
+18:03
+says that's somewhat well it's certainly
+18:08
+more tangible but somewhat more reliable
+18:10
+than this next point which is that
+18:12
+what's also nice is we conveniently say
+18:15
+we needed
+18:15
+ABC and the fact that XY and Z were
+18:18
+needed was just solve for us maven will
+18:21
+NAB through the transitive dependencies
+18:23
+and pull everything else in so there's
+18:25
+an ease factor to point to here right
+18:28
+the other thing we do with this these
+18:32
+depths or the pom is that we turn around
+18:35
+or our build turns around and propagates
+18:39
+them into our artifacts so that maven
+18:41
+can do this with our stuff right can
+18:44
+continue to nav down and let somebody
+18:47
+who uses us and in particular when I'm
+18:50
+talking about us today I'm mostly
+18:51
+talking about when we write libraries
+18:53
+right when you have the consuming app
+18:55
+it's somewhat different and I'll talk
+18:57
+about that later but in particular when
+18:59
+we're writing libraries so we're writing
+19:00
+a B or C right we use X we need that in
+19:04
+our palm so someone who uses us gets X
+19:06
+in addition to us so the whole YZ thing
+19:09
+and stuff works so that's why we do it I
+19:12
+think one of the things people imagine
+19:14
+happens from putting in this in this
+19:17
+project file is we give some integrity
+19:20
+promise we make some integrity promise
+19:22
+about we've tested our library against
+19:24
+this thing
+19:25
+I do not care because the chances of me
+19:30
+running against the thing you test it
+19:31
+against are slim in the end we'll talk
+19:34
+about that later so I think that's a non
+19:36
+benefit you imagine it but it's not true
+19:40
+but again the problem is that this is
+19:42
+coarse-grained these things are don't
+19:45
+tell us what's actually happening and
+19:46
+they just create a context so what I
+19:51
+would like to talk about is how we talk
+19:55
+about change because you know I
+19:57
+mentioned things change and then we're
+19:59
+going to change versions or get new new
+20:01
+versions but I want to disentangle this
+20:04
+and I think that you can boil down all
+20:08
+change into this kind of language right
+20:12
+which is if I'm making a library I may
+20:15
+make requirements of the users of my
+20:18
+stuff right so what do I require if I'm
+20:22
+writing a function what I require are
+20:24
+the arguments you have to pass me
+20:26
+arguments if I'm a namespace what do I
+20:30
+require just names right a namespace is
+20:37
+sort of like a lookup your give me this
+20:39
+name I gave you this bar or the function
+20:42
+the thing in it go out the level again
+20:45
+what do artifacts require if I give you
+20:49
+a jar what are you going to do you're
+20:53
+similarly going to look for stuff in
+20:54
+there right with either a name or a path
+20:57
+you're going to find the actual class
+20:59
+file or clj file given some name right
+21:06
+so there's a sense in which namespaces
+21:08
+and artifacts are just functions of
+21:09
+names to stuff okay a namespace is a
+21:14
+function of a name to a bar or function
+21:16
+artifacts as a function of a name to a
+21:18
+namespace for package right then you can
+21:22
+flip it around and you can say what does
+21:25
+the library provide a function provides
+21:28
+its return right if you gave me what I
+21:31
+required I will provide to you this
+21:33
+result
+21:35
+and of course I would like to broaden
+21:38
+this discussion to include services and
+21:40
+procedures and things like that so if
+21:41
+your thing is affect 'full right one of
+21:44
+the things you provide is that effect
+21:46
+right if you call this thing with these
+21:49
+arguments the thing will be in the
+21:50
+database or I will send an email for you
+21:52
+or some other some other thing what does
+21:56
+a namespace provide it's just the lookup
+21:58
+but you give it a name it gives you the
+22:00
+VAR function what does an artefact
+22:02
+provide you gave it the name it's going
+22:03
+to provide you with the class files the
+22:06
+packages this kind of stuff so that's
+22:10
+how we exchange things so what I will
+22:13
+say is that you can now look at the
+22:18
+kinds categorically the kinds of changes
+22:21
+you would make in these ways right the
+22:25
+first is this idea of growing your
+22:27
+software your software is going to do
+22:30
+more the first thing is just a chrétien
+22:33
+right what happens when you recruit you
+22:36
+say I'm going to provide you more you
+22:38
+were giving me seven before and I gave
+22:41
+you back 42 and now I'm going to give
+22:42
+you back 42 and some we write more stuff
+22:48
+so this not a lightweight use of this
+22:51
+word provide I mean very specifically we
+22:53
+need to say the words provide and
+22:55
+require so we're going to provide more
+22:57
+that's straight accretion the other
+23:01
+thing is relaxation right it used to be
+23:05
+you give me two wheat and a donkey and
+23:08
+I'll give you some steel and now I don't
+23:12
+need the donkey just going to be wheat
+23:14
+and I'll give you steel so I require
+23:18
+less right that's a relaxation on my
+23:22
+part right and there's a nice sort of
+23:26
+zen-like thing of saying you know the
+23:28
+less you need the the more you're
+23:31
+growing right it is it well whatever
+23:37
+I will push them not that like
+23:40
+touchy-feely and the others fixation and
+23:44
+this is another cool thing as I looked
+23:46
+up fixation it actually means to fix
+23:47
+things it doesn't mean to be paranoid so
+23:52
+then the final thing is just fixing
+23:54
+stuff which doesn't impact what you
+23:56
+provide or require it just means you're
+23:59
+now doing it correctly or maybe faster
+24:02
+or maybe with fewer requirements you
+24:07
+know fewer dependencies or something
+24:09
+something else but whatever it doesn't
+24:11
+impact what you provide or require ok
+24:14
+because again this blanket concept of
+24:18
+change it also is used casually in
+24:22
+conversation to talk about these things
+24:25
+which is breaking your software how do
+24:27
+you break your software you require more
+24:31
+oh that to eat and a donkey it's not
+24:37
+enough I want gold too and a ruby and
+24:40
+then you'll have steel right and you
+24:44
+know it's sort of evident I mean we use
+24:46
+bigger sentences to mean I broke you and
+24:50
+you know it's incompatible or something
+24:52
+like that but we should be using these
+24:54
+small things I just require more if you
+24:56
+require more than somebody who's giving
+24:58
+you less now is not going to get what
+25:01
+they want it's not going to work for
+25:02
+them it's broken
+25:03
+alright the flip side is you're
+25:06
+providing less well I was giving you
+25:09
+steel and now I'm going to give you tin
+25:11
+and good luck with your building so
+25:16
+you're providing less of returning less
+25:19
+than what you promised previously the
+25:21
+other sort of categoric you know why are
+25:24
+you doing this is just just changing
+25:27
+like you know we were calling that you
+25:30
+know trade and now we'd like trade to
+25:33
+mean like something completely different
+25:34
+so we're just going to use it for
+25:37
+something else and so if you were
+25:38
+calling trade you know it's like the
+25:41
+classic thing if you have well
+25:42
+homophones are or or something straight
+25:45
+out like draw write drawing pictures we
+25:47
+used to draw pictures for you and now we
+25:48
+draw guns for you
+25:49
+just the semantics are shot this
+25:53
+complete do-over so so the thing here is
+25:57
+that change is not a thing we shouldn't
+26:00
+really be saying I changed it because
+26:02
+you're telling me nothing when you say
+26:05
+that you tell me nothing because I just
+26:07
+described - this is great
+26:10
+I like this I'm happy to give you less I
+26:13
+like the new gold you're giving me
+26:16
+awesome awesome sauce here I'm really
+26:19
+angry at you right this is not good so
+26:23
+calling a change it's just not useful we
+26:27
+need to talk about one of two things is
+26:28
+either it grew or broke right there's
+26:32
+growth and there's breakage so there's
+26:36
+so one of the things that spec is
+26:39
+designed to do is to help us understand
+26:42
+and maybe even programmatically detect
+26:46
+when we've accidentally broken something
+26:49
+when we just intended to grow it and
+26:52
+make an argument for growing it in a
+26:54
+minute but but that's an important part
+26:57
+so that's why spec uses set logic for
+27:01
+maps and uses reg X's for sequential
+27:06
+syntax is because there there's already
+27:09
+logic for determining growth like
+27:14
+compatibility of those two things right
+27:17
+there's already math for that stuff so
+27:20
+it's not just going to be this I promise
+27:24
+you kind of use car dealer thing we can
+27:27
+we can you know we can run a program and
+27:29
+maybe determine this we don't have those
+27:31
+programs yet for a spec but spec is
+27:34
+designed to support them being written
+27:37
+so that helps us in the small as long as
+27:41
+we don't do something like try to
+27:44
+version specs version 2.00 the spec says
+27:47
+you need to give me gold now don't do
+27:52
+that
+27:54
+so what about changing the large well
+27:58
+the key thing here I would say is that
+27:59
+we need to start recognizing when things
+28:02
+are collections because there's only two
+28:03
+rules for collections right if something
+28:07
+is just a collection including an index
+28:09
+collection right you give me the name I
+28:11
+give you a thing but that's still a
+28:14
+collection it's just a index keed
+28:16
+collection right there's only two
+28:18
+operations
+28:19
+there's adding stuff to the collection
+28:21
+or removing stuff from the collection
+28:24
+adding stuff is growth period it's just
+28:27
+easy it's just accretion and removing
+28:30
+stuff is always breakage always removing
+28:35
+is breakage from a collection but the
+28:37
+important thing is when you look at
+28:39
+software you need to see these
+28:42
+collections because the other problem we
+28:44
+have all the time is we we keep
+28:46
+conflating changes at different levels
+28:49
+and the versioning system encourages
+28:52
+that right a namespace is just a
+28:55
+collection of VARs right artifacts are
+28:59
+just collections of namespaces or
+29:01
+packages we need to see that spec uses
+29:05
+sets for maps it doesn't let you say
+29:10
+what the keys mean for this reason it's
+29:13
+the same thing maps are collections of
+29:17
+keys they're not the stuff inside the
+29:22
+keys right if I put on a hat it doesn't
+29:27
+change what my family I would still
+29:29
+remember my family my family contain
+29:30
+these people before it contains the same
+29:33
+people later
+29:33
+I didn't version my family when I put on
+29:36
+a hat but we do this all the time all
+29:40
+the time we don't see this so you have
+29:43
+to recognize collections is really all
+29:45
+the interesting stuff happens at the
+29:47
+leaves and everything else is collection
+29:48
+with these two rules adding stuff fine
+29:50
+taking stuff away it breaking alright
+29:53
+now we get really ranty
+29:58
+semantic versioning I looked this up in
+30:01
+the dictionary and it didn't it wasn't
+30:04
+there right because because like what if
+30:10
+we had dictionary version right this
+30:14
+sort of a fundamental problem with this
+30:16
+idea of semantic versioning which is
+30:18
+like things mean what they mean until
+30:20
+they don't mean what they mean this is
+30:22
+helping me how I don't really see it so
+30:26
+let's dig into the semantics promised by
+30:29
+semantic versioning if you change the
+30:31
+patch part you don't care as a consumer
+30:35
+if you change the minor version you also
+30:39
+don't care but you just don't care these
+30:43
+things mean that they have this this
+30:44
+they have this great semantics for is
+30:47
+more than three that's it
+30:51
+you know I'm glad there's like a you
+30:55
+know a manifesto about this
+31:01
+but what about the major component what
+31:04
+does it mean it means you're screwed
+31:07
+right that's the semantics of the major
+31:09
+component it's terrible it's an absolute
+31:12
+catastrophe right it does because it
+31:16
+doesn't tell you in what way right what
+31:20
+it really says is you might be screwed
+31:24
+right so if somebody says you're screwed
+31:27
+you're like oh that's that's terrible
+31:29
+uh if somebody says you're Mike you're
+31:31
+screwed you're like it's worse it's
+31:36
+clearly worse right and why why is that
+31:40
+it's because this level thing it didn't
+31:43
+occur to this people who did this right
+31:47
+smash all the levels together any change
+31:51
+anywhere of anything that might be any
+31:54
+of the things we just like carefully
+31:56
+pulled apart and said you are requiring
+31:59
+more you're providing less this this is
+32:02
+big ugly thing where anything could have
+32:05
+happened and we're just telling you
+32:08
+watch out watch out and I don't think
+32:13
+that's useful right I think you know Stu
+32:15
+said it before trying to steal my
+32:17
+thunder you might as well just change
+32:19
+the name my going to 2.0 is not helping
+32:23
+anybody yeah just change the name I mean
+32:31
+what does it mean it's not it's just
+32:34
+completely not meaningful to do this to
+32:36
+somebody it just isn't it's just like
+32:38
+we're rule now playing a different game
+32:40
+and it's called the same name you know
+32:42
+have a seat you don't know how it's
+32:43
+played you thought you did I I predict
+32:48
+you're going to lose
+32:53
+and I think the thing is that you're
+32:56
+like well is that bad and then I'm not
+32:57
+changing it that's a new thing yeah
+33:01
+that's exactly right it's a new thing so
+33:08
+this raises the question of like which
+33:10
+name do you change because we just saw
+33:12
+this smashing together up into the
+33:14
+version of the artifact is probably not
+33:17
+good right so if I'm going to say to you
+33:20
+change the name I need to be able to
+33:22
+answer this question what name should I
+33:25
+change should I call the whole thing if
+33:28
+I'm if I'm requiring more in one of my
+33:32
+functions should I change the artifact
+33:34
+name to you know new game and now it's
+33:39
+the same thing right you're going to go
+33:41
+look at the levels for providing
+33:43
+requiring so are you requiring more
+33:45
+arguments or more from the arguments or
+33:48
+providing less in your return we
+33:51
+recognize these things as breakage
+33:53
+before essentially we're going to be
+33:55
+able to say this speck is incompatible
+33:58
+the speck for your revised function is
+34:00
+incompatible and if it is I want to see
+34:03
+a new function right and enclosure you
+34:06
+have two ways to do that you can stay in
+34:08
+the same namespace and you can have foo
+34:10
+- right or maybe you made a systemic
+34:14
+kind of change it's looks like we've
+34:15
+been passing around this thing and now I
+34:17
+realize that everywhere in our API we
+34:20
+should be passing around two things well
+34:22
+just make API - you know namespace you
+34:27
+can keep all the inner functions the
+34:29
+same which is fine I mean I know like
+34:31
+thinking of a good name is hard right
+34:35
+but namespaces mean you can glom some
+34:37
+different thing on the front and have
+34:38
+good name you know new place different
+34:40
+you know good name you don't have to you
+34:43
+know go on and on but in practice I
+34:45
+wouldn't either be afraid of foo -
+34:47
+because it's not it just doesn't happen
+34:49
+that often you know it just it really
+34:52
+just doesn't and and one of the things
+34:57
+that's really great about this this is
+34:58
+to remember that the namespace is part
+35:01
+of the name it there's really nothing
+35:02
+called for
+35:04
+to enclosure except like a local
+35:05
+variable everything else has a big hairy
+35:09
+name that includes the name space
+35:11
+beforehand we're always dealing
+35:13
+enclosure with these nice hopefully
+35:15
+globally unique names and spec liens on
+35:19
+that and you can lean on that to make
+35:21
+these kinds of changes the other thing
+35:23
+we have is our the aliases which help
+35:26
+again right because I could take some
+35:28
+code that used you know game one
+35:31
+namespace and called game 1 foo and now
+35:34
+what's called game 2 foo and it can just
+35:36
+say G foo everywhere in the code and
+35:38
+just change the NS declaration to say
+35:40
+you know require game 2 as G now if I
+35:45
+just did that and walked away from the
+35:46
+code it would break but I'm when I'm
+35:50
+doing that I'm saying well I'm moving to
+35:52
+the new thing I should read the new
+35:53
+specs read the docs I know some of the
+35:56
+names of berm reused but I'm in charge
+35:59
+right when do I need to do that when I
+36:03
+feel like playing the new game if I want
+36:06
+to continue to play the old game which
+36:08
+maybe I'm decent at I'm going to do that
+36:10
+I got a lot of week to get rid of all
+36:15
+right so what about if you want to get
+36:17
+rid of a fun I mean just I hate this
+36:19
+function I hate it I hate it I hate that
+36:23
+people call it I just want to add on my
+36:25
+life there's no functions like this
+36:29
+enclosure
+36:34
+so the way to do that what have you
+36:36
+changed right if you want to get rid of
+36:38
+a function you didn't change the
+36:39
+function really because it's like God
+36:41
+what did you change you change the
+36:44
+collection the collection no longer has
+36:46
+the the thing that was in it so where
+36:49
+are functions there in namespaces so the
+36:51
+namespace that collection level has
+36:52
+changed so you need to pick a new
+36:54
+namespace and again a major refactoring
+36:57
+might be a way to do this we've
+36:59
+deprecated a whole bunch of functions
+37:01
+blah blah blah we're going to move to
+37:03
+library 2 and really the biggest change
+37:05
+there is not that any of the functions
+37:06
+are different it's that half of them are
+37:07
+missing right we just don't want to have
+37:10
+them anymore so we have a new namespace
+37:12
+game - namespace and we just took out a
+37:14
+bunch of stuff and that's really what's
+37:15
+different about it so this is the way to
+37:17
+do that alright moving up another level
+37:21
+what about at the artifact level so what
+37:24
+if I want to get rid of these this
+37:25
+namespace I hate this namespace people
+37:28
+are still using this namespace I gave
+37:30
+them a better namespace you know three
+37:32
+years ago they should be using that I'm
+37:35
+tired of these people I'm going to take
+37:36
+this away from them I just really want
+37:38
+to do this what should i do well then
+37:40
+you know again because of the levels
+37:41
+thing we're getting rid of something in
+37:43
+the collection the collection is the
+37:44
+artifact and you would think by applying
+37:48
+this logic that you should just change
+37:50
+the artifact ID and you could you
+37:51
+definitely could the first counter
+37:55
+argument I would or objection I would
+37:57
+expect here is that's what the major
+37:58
+version is for you know that's what it
+38:00
+isn't right unless they're going to have
+38:02
+semantic versioning 3.0 which completely
+38:05
+changes what this means for everybody
+38:07
+who uses it and breaks all uses of it
+38:10
+and all presumptions about it forever
+38:12
+for everyone which they're not going to
+38:14
+do because in fact they don't believe in
+38:17
+semantic versioning you couldn't you
+38:19
+couldn't version semantic versioning
+38:21
+into supporting this change and that
+38:24
+shows that it's broken right semantic
+38:28
+versioning can't support this change you
+38:30
+can't have semantic versioning 3 oh I'll
+38:32
+do this without breaking everybody in it
+38:35
+in an unfixable way so unfortunately
+38:38
+they already decided what this means
+38:39
+which is and this is a quote from the
+38:40
+spec any backwards incompatible changes
+38:43
+across all the levels we can't suddenly
+38:45
+make it
+38:45
+mean only additions or removals only
+38:48
+removals of namespaces or packages would
+38:52
+cause this to move so it's got to
+38:55
+brought a semantics so that's not it the
+39:00
+problem we have here is that magic I
+39:02
+talked about earlier right if I just say
+39:05
+this is game 2 library right inside it
+39:12
+it's got you know turn one namespace but
+39:19
+game one library also has turned one
+39:21
+namespace and where's the mapping from
+39:24
+artifacts to namespaces I don't know the
+39:29
+guy in the street he's not there today
+39:30
+right it's nowhere there's not a place
+39:35
+for this so we can have these clashes
+39:36
+how many people have ever had a clash
+39:37
+where two jars they included had the
+39:40
+same package in them
+39:41
+woohoo how many people enjoyed that
+39:45
+right so this can happen in like there's
+39:47
+really nothing there the thing that it
+39:49
+solves this for us when we made this
+39:51
+change at the namespace level was the
+39:53
+fact that that implicitly gave us a new
+39:55
+scope it really actually renamed
+39:57
+everything in that thing if I still had
+40:00
+foo and bar I have game 2 foo and bar
+40:02
+they're not in conflict with game 1 foo
+40:05
+and bar I'm sort of ok if I do this up
+40:08
+at this level I'm not ok because it's
+40:11
+actually not an implicit change some of
+40:13
+the ways to deal with this would be
+40:14
+actually renaming your namespaces to
+40:16
+match this change because usually your
+40:19
+namespaces have some relationship to the
+40:21
+artifact name it's some the library name
+40:24
+is like in both I'm actually sure if
+40:28
+that's the right answer to this but I
+40:29
+would like to fix this ok so this just
+40:34
+seems like a lot of work right it
+40:38
+doesn't this make you reluctant to
+40:39
+remove things this is a rhetorical
+40:42
+question the right answer is yes it does
+40:45
+it makes me reluctant to move things
+40:46
+remove things and it should this like
+40:49
+yeah why should you get so uptight about
+40:52
+somebody calling the function that you
+40:53
+don't like anymore so what
+40:57
+like really what is more important okay
+41:02
+so here's the the root of the rant
+41:05
+breaking changes are broken that it's
+41:09
+just a terrible idea
+41:11
+don't do it don't do it don't try to
+41:14
+figure out the right way to do it don't
+41:15
+get together on the internet and say oh
+41:17
+we've all agreed you know major version
+41:19
+makes this possible woohoo it's a bad
+41:22
+thing you don't want to do it don't
+41:25
+figure out the best way to do it this
+41:28
+method of renaming turns breakage into
+41:31
+accretion right we still accomplish the
+41:32
+same thing right we got rid of that
+41:34
+pesky function because we have a new
+41:36
+name space that doesn't include it right
+41:38
+we you know we we clarified these
+41:41
+arguments so we we really need new stuff
+41:43
+to do this new job well we wrote a new
+41:45
+function to do that and it sits
+41:47
+alongside the other word this is
+41:50
+gigantic right because this coexistence
+41:53
+means people can just freely proceed
+41:56
+otherwise they have to be paranoid all
+41:59
+the time because how many people have
+42:01
+ever encountered a breaking change that
+42:03
+didn't move the major version and how
+42:06
+much fun was that it doesn't matter the
+42:10
+version it doesn't matter what matters
+42:11
+is that you did this it doesn't matter
+42:14
+how you covered it or didn't cover it or
+42:16
+what you said or how you excused it or
+42:17
+whatever it's just not good right so we
+42:20
+like this they can coexist we want to
+42:22
+turn breakage into accretion so it's may
+42:26
+even broken right this is what we do
+42:28
+with maven not really right we're doing
+42:33
+this to ourselves right maven is
+42:36
+actually quite interesting
+42:38
+first of all maven doesn't let you
+42:41
+change artifacts in it doesn't let you
+42:43
+do this right and may even never breaks
+42:47
+and maven is not versioned
+42:50
+is there maven version you know maven
+42:54
+central version 1,600,000 and 17 is
+42:58
+there right there isn't how could this
+43:01
+work how could how could this be all
+43:04
+these people changing all the stuff all
+43:06
+the time and maven never breaks it never
+43:09
+breaks because it actually
+43:10
+it doesn't voices that's for losers I'm
+43:13
+not doing versions maven central is a
+43:15
+big name you can rely on go to maven
+43:18
+central and you can find everything you
+43:20
+ever found in there forever and ever and
+43:22
+ever
+43:23
+that's the idea of maven central right
+43:25
+you don't say I'm going to use maven
+43:28
+central you know 5060 to I mean the
+43:30
+number would be astronomical right and
+43:31
+like oh no I use maven this and then
+43:34
+we'll have maven versioning versioning
+43:36
+maven central versioning we don't do
+43:40
+that and yet it works right it's where
+43:42
+it's like crazy we've all presumed what
+43:45
+this name maven central means we all
+43:47
+share it and we also all share an
+43:50
+understanding and actually sort of a
+43:52
+peaceful feeling that it will continue
+43:56
+to mean what it always meant forever and
+43:59
+ever and ever
+44:00
+how could this work how could it work
+44:03
+it's very straightforward
+44:05
+it's an accreting collection of
+44:07
+immutable things as functional
+44:08
+parameters we should be like duh of
+44:11
+course this works this is what we do in
+44:14
+the small everyday and at the very top
+44:19
+end of the ecosystem this is how it
+44:22
+works also so at the bottom it works
+44:23
+like this and at the top it works like
+44:26
+this so I'll just advise you right now
+44:31
+not to look up rotten sandwich on the
+44:33
+Internet
+44:38
+because it's it's it's quite unpleasant
+44:43
+but you can imagine this beautiful
+44:46
+sandwich right at the bottom we have our
+44:48
+functional program and we know we're
+44:49
+doing we we have all this assignment
+44:53
+conversation say with some we're talking
+44:55
+about you know talking to Java people
+44:56
+about using closure and I think I do
+44:59
+think it remains one of the biggest
+45:00
+challenges you have and trying to
+45:02
+evangelize closure is that you
+45:04
+eventually end up in a point where
+45:06
+you're trying to say to somebody you
+45:09
+know closure solves the problem that you
+45:11
+don't know you have and that problem is
+45:14
+like this intense anxiety and pressure
+45:17
+you feel dealing with mutability on an
+45:19
+ongoing basis and until you've
+45:21
+experienced that you know lifting and
+45:24
+closure is not the only language that
+45:25
+can do this for you but until you feel
+45:27
+that lifting you don't really know what
+45:30
+you were suffering from before it's like
+45:32
+if someone's standing on your foot every
+45:33
+day you'd be like you know you wouldn't
+45:37
+even know and then they get off you're
+45:38
+free like whoa that's pretty good
+45:41
+walking is a lot easier now so so we've
+45:46
+experienced this at the bottom and we
+45:47
+actually do experience that same thing
+45:49
+like I said when you use me even
+45:50
+centrally you also feel the same way
+45:52
+about it it's like I'm not really afraid
+45:54
+I'm going to go look in there and jar
+45:57
+XYZ one two three four is going to be
+45:59
+different tomorrow or missing not really
+46:03
+worried about things those things
+46:04
+because they have these rules that play
+46:06
+the game I've been describing so far
+46:08
+which is name should be enduring
+46:10
+in their semantics and you should be a
+46:12
+creating immutable stuff but in the
+46:15
+middle we're messing this up big time
+46:18
+right the way we do artifacts the way we
+46:21
+do namespaces the way we just trash
+46:23
+function signatures is a complete mess
+46:28
+so this is not a surprise at this point
+46:32
+in the talk is semantic versioning
+46:33
+broken totally yes broken bad idea we
+46:37
+should abandon it as soon as possible
+46:39
+right because it is fundamentally in the
+46:43
+in the biggest semantic it has right not
+46:46
+the small ones which are like four is
+46:48
+bigger than three
+46:48
+right in the biggest Symantec has the
+46:51
+semantics about major version change
+46:53
+it's a recipe for how to break software
+46:56
+that's what it is
+46:58
+that's what semantic versioning is like
+46:59
+here's how you break software here's how
+47:02
+you screw up your users here's how you
+47:04
+make like life difficult for people
+47:06
+here's how you undermine software
+47:09
+development and you know and but it's a
+47:11
+standard and it has like you know it has
+47:15
+a web page and everything I'm not
+47:20
+actually you know advocating for
+47:21
+something particular said except to say
+47:23
+that it doesn't matter a whole lot I
+47:25
+mean as long as you have something that
+47:26
+still has the properties the for is
+47:28
+bigger than three you know some sort of
+47:30
+sequentiality to it you have a lot of
+47:32
+options here one of the problems with
+47:34
+versions even if you get rid of the
+47:36
+major version this minor version thing
+47:38
+is that it's it's completely self
+47:43
+relative right 1.2 is bigger than 1.3
+47:47
+but I have these six libraries this is
+47:48
+1.2 this is 3.7 this is 4.1 you know one
+47:55
+of these three is 11 years old and the
+47:58
+other one was released yesterday can you
+48:00
+tell which one no these numbers they
+48:03
+don't they don't relate to each other
+48:05
+now that's not saying you could take
+48:07
+this chronological versioning and do
+48:09
+something deterministic with it because
+48:11
+you don't know what people saw right but
+48:13
+you could use Lamport lock like logic to
+48:16
+know what they could not have seen which
+48:20
+is not nothing but you don't have that
+48:23
+otherwise so if your artifact name is a
+48:28
+stable thing a stable a thing as maven
+48:31
+central you have a lot more flexibility
+48:34
+about this you could do something like
+48:36
+this it would convey more information
+48:38
+that then 4.3 does and have some sort of
+48:43
+possibilities for relativism
+48:47
+what about git
+48:50
+so this is another thing I mean
+48:51
+obviously these approaches predate get
+48:55
+everything we're doing about jars and
+48:58
+maven and stuff is really pre good but
+49:01
+git has these great properties is
+49:02
+definitely Cole aligned with a lot of
+49:04
+what I'm saying right it's immutable its
+49:06
+truth of code it really is about this
+49:09
+source code as opposed to stuff you just
+49:11
+made up about it later right 4.3 what I
+49:15
+mean what does it even mean to say this
+49:16
+is 4.3 oh that's good I mean it doesn't
+49:23
+mean anything it really does not mean
+49:27
+anything so the truth is always the code
+49:29
+right now it's quite widely adopted it
+49:33
+has a nice property being able to do
+49:34
+content-based addressing like I said
+49:37
+it's pretty much ignored by the systems
+49:39
+it's not their fault right it's just
+49:40
+that they existed before it does it does
+49:43
+have some challenges I mean I think this
+49:46
+should participate right I started this
+49:48
+talk by saying the truth is actually the
+49:50
+code dependencies and get you know is
+49:53
+where the code is being managed but the
+49:57
+way get talks about stuff is via Shaw's
+49:59
+and people don't like Shaw's they like
+50:04
+the characteristics of it in terms of
+50:07
+being you know a universal unforgeable
+50:11
+key but it doesn't convey anything about
+50:14
+order unless you have the rest of the
+50:16
+repo it doesn't imply anything about
+50:18
+causality I mean four is greater than 3
+50:21
+at least says that it came after and
+50:25
+those readability issues but I you know
+50:28
+I think that there's a way to integrate
+50:30
+this stuff and I think it would be
+50:32
+driven from the bottom back up to make a
+50:36
+solution so
+50:40
+now this is not like me preaching to you
+50:42
+or like I think we all could do better
+50:45
+with us I mean closure doesn't have a
+50:47
+perfect track record in this area but
+50:50
+the most important thing is that you
+50:52
+know we're not going to be able to you
+50:54
+know tack ourselves out of this right
+50:57
+what did I say about maven and it's
+50:59
+actually not broken right what's broken
+51:01
+is that what we're putting into it is
+51:02
+broken for that to be different we need
+51:05
+to not put broken stuff in there and
+51:08
+that's a social thing that's about
+51:11
+considering other people one of the
+51:19
+things I think that makes this
+51:20
+challenging is is open source right
+51:26
+because when we work in a local team or
+51:31
+whatever in your team it might be a
+51:32
+distributed team but when you work in
+51:34
+your team you have a small set of people
+51:36
+and you have stand-ups and you're
+51:41
+working on private stuff that doesn't
+51:43
+get published and no one's consuming
+51:44
+except yourselves you have everybody in
+51:46
+on the call and we say you know what I
+51:49
+think we did this wrong we really do
+51:52
+need to we need wheat and corn to do
+51:55
+this job all right well we got to change
+51:57
+all of our calls to pass corn everybody
+52:00
+good on that yeah Sally when can you
+52:03
+have your wisdom Tuesday I'll have mine
+52:05
+done by Friday all right by next Monday
+52:07
+we'll all be passing wheat and corn
+52:09
+everybody okay yeah yeah yeah yeah great
+52:12
+have a good day
+52:14
+stand up is over now we move to the
+52:19
+internet and we have slack and it feels
+52:23
+like that right we're hanging out or
+52:26
+friends are there a bunch of people that
+52:28
+work in this library are there we're
+52:29
+like ah you know what this library it's
+52:32
+just not good we're a passing wheat and
+52:34
+we need wheat and corn what do you think
+52:38
+oh yeah
+52:38
+I think so too everybody agree on slack
+52:41
+that day agrees
+52:44
+we should be passed in corn all right
+52:47
+good I'm gonna go do it you know I'm
+52:48
+just gonna do it
+52:49
+you know boom get commit github artifact
+52:55
+its enclosure ours you know I talked to
+52:59
+everybody on slack right it feels it
+53:03
+does feel like this like it's the same
+53:06
+because it's what we want I mean so we
+53:09
+would want open-source to be sort of
+53:11
+like the team is now you know everybody
+53:13
+but there's two things maybe everybody
+53:17
+who actually is an author of that
+53:19
+library was in slack right but it's
+53:23
+different my on stand up everyone who
+53:25
+was an author was on stand up and
+53:27
+everyone who was impacted was on stand
+53:30
+up on slack maybe everyone who was an
+53:33
+author was on slack everyone who was
+53:36
+impacted who knows who they are
+53:38
+who knows who all their users of their
+53:41
+libraries are unless it's nobody then
+53:47
+you don't know right so the user base is
+53:50
+open and it's unknown you have to you
+53:55
+have to be caring about these people
+53:56
+that you don't know I know in this
+54:00
+political climate it just seems like
+54:02
+something wild to say but you actually
+54:04
+do you have to care about these people
+54:07
+that you don't know and in software we
+54:10
+need to do the same thing and so open
+54:12
+source development is not the same slack
+54:14
+is not stand up so how do we code for
+54:21
+growth right Alex Miller is talked about
+54:26
+spec a bunch and so has stew and the
+54:29
+number one question they get about spec
+54:32
+is why don't you let me say disallow any
+54:35
+other keys and maps I'm angry about this
+54:38
+I can't check for correctness without
+54:41
+this thing right it is the number one
+54:44
+beef and we saw this beautiful talk by
+54:48
+Paula about logic this morning guess
+54:51
+what most logic systems don't have in
+54:54
+fact I don't know of any logic systems
+54:56
+that do have it
+54:57
+they don't have something that says and
+54:58
+nothing else will ever be true
+55:05
+and the reason why they don't have it is
+55:08
+because then you like you could almost
+55:09
+do no good logic with that system and
+55:12
+you could never ever know or calculate
+55:16
+anything you didn't know on the very
+55:19
+first day right so open specs and open
+55:22
+data formats which we like right we use
+55:25
+maps we use them all the time
+55:27
+in general we should be writing code
+55:29
+that's like doesn't care if those keys
+55:31
+in the map that we don't we don't care
+55:32
+about but it's like a critical thing
+55:35
+about spec spec is about what you could
+55:37
+do but it's not about what you can't do
+55:40
+because tomorrow maybe I could turn weed
+55:44
+into cows you know I don't know
+55:47
+I want to retain the flexibility to be
+55:49
+able to do that especially if I can
+55:50
+figure out how to do that
+55:51
+might be a cool thing so so you can't
+55:55
+let you know you're checking problem du
+55:59
+jour dominate your specs that's not what
+56:02
+specs before they're about what people
+56:04
+can do you could make something with
+56:06
+spec that could do that extra thing
+56:08
+don't put it in your specs that's not
+56:09
+your public thing you want to add
+56:11
+another layer respect that they like
+56:13
+shuts down stuff or run an additional
+56:15
+check to help people you know detect
+56:18
+errors or something like that that's
+56:19
+fine but don't put it in your primary
+56:21
+public spec your primary public specs
+56:23
+you re nted towards growth because
+56:26
+otherwise you're going to have nowhere
+56:28
+to go because what happens if I let you
+56:30
+prohibit things I promise you this is
+56:32
+what it's going to happen and believe me
+56:33
+every engagement we've had where people
+56:35
+said I really want to say you can click
+56:37
+two days later right their world broke
+56:41
+because they had nowhere to go right if
+56:44
+you say you can't do X it means you can
+56:48
+never do X and if you're going to try to
+56:51
+like make it okay to do X later then you
+56:55
+need a new name but now we did the
+56:57
+opposite of what I was saying before
+56:59
+right when I said before is if you're
+57:01
+going to break somebody use a new name
+57:04
+now we're saying if you want to grow use
+57:08
+a new name that's awful right because
+57:11
+that's going to cause your thing to
+57:13
+change the key that was in your map
+57:15
+you're spec to change the spec of the
+57:18
+thing that included you to change the
+57:20
+speculative thing that included that to
+57:21
+change spec is designed so that that
+57:23
+doesn't happen that as long as you make
+57:25
+growing changes you do not need to
+57:28
+cascade up spec is not like semantic
+57:31
+versioning that way but if you do this
+57:34
+you will turn that completely upside
+57:37
+down you will have this problem so this
+57:39
+is why you can't I don't have a shorter
+57:43
+way to do that but that's what that's
+57:45
+why it's this way okay the other thing
+57:48
+you have to do if you want to code for
+57:49
+growth is you always have to presume
+57:50
+people might hand you stuff that you
+57:52
+don't know about that's just got to be
+57:54
+okay although it's a coding discipline
+57:56
+to deal with that a lot of people have
+57:58
+like a just take everything that's in
+58:00
+the map and put it on the screen you
+58:02
+know maybe you should still like keys
+58:04
+right because if you just throw
+58:06
+everything on the screen and they just
+58:07
+give you their you know social security
+58:09
+number because they're there they're
+58:11
+already anticipating you know API to
+58:13
+know which grows in that way that that's
+58:17
+not good
+58:17
+so you have to either ignore it I have a
+58:19
+policy for or something like that but
+58:20
+you should be okay with it
+58:22
+they should not be disallowing this
+58:24
+stuff you can make checkers that run
+58:26
+occasionally to do whatever but as a as
+58:28
+a specification this has to be okay all
+58:34
+right so what about iterative
+58:35
+development right this all sounds like I
+58:38
+got to get it right the first time
+58:40
+right and that's not the case right
+58:43
+you're going to have a place where
+58:45
+you're just trying to figure it out you
+58:47
+get off the hammock I hope you went on
+58:50
+the hammock a little bit you came in you
+58:52
+start typing you know you push something
+58:54
+and you look at it and people kick her
+58:56
+in this like uh you know I tried it it's
+58:58
+not that great that's fine you just need
+59:01
+to be clear that you're there you're in
+59:02
+that mode and people should expect to
+59:05
+have to move along if they're want to
+59:07
+use your alpha they want to be on your
+59:10
+standup they want to be in that circle
+59:13
+but I think what we need is something
+59:16
+more fine grain than artifact releases
+59:19
+to be a tool for publishing actually
+59:22
+calling an entire API and alpha is
+59:25
+somewhat of a problem because this
+59:27
+like then you need this big moment to
+59:30
+get out of that so I think that's an
+59:33
+area where we could we can do something
+59:35
+more specific but that's not to say that
+59:39
+you know just leave your thing
+59:40
+Oh dot oo or dot you know 967
+59:45
+you know at a certain point you're going
+59:48
+to have users and what whether you
+59:50
+change it to 1.0 or not they're going to
+59:54
+be depending on your stuff but I do
+59:58
+think we need to be clearer about like
+60:00
+where your promises lie what did you
+60:03
+actually promise and you know yes you
+60:05
+discovered the fact that if you give me
+60:06
+a ruby i'll give you you know a magical
+60:10
+sword but like I never told you I would
+60:11
+do that why don't I go this far yeah
+60:20
+okay okay so so now we've talked through
+60:26
+we start with code we get two artifacts
+60:30
+there's this magical jump there but this
+60:33
+is other problem which I talked about
+60:34
+when you were building your library
+60:36
+right which is I don't care what you
+60:38
+said in your palm for your library that
+60:41
+does not mean that you're going to get
+60:43
+what you said the very first slide right
+60:45
+one library wanted X you know why 2.1
+60:49
+and another library wanted y 2.4 Lily
+60:52
+both can't get what they want and your
+60:54
+app needs to use both of them so there's
+60:57
+no truth in this transitive dependency
+61:00
+tree it's all suggestive you know I
+61:04
+would like this I would like that you
+61:06
+know it's like a Christmas list Santa
+61:07
+saying you know all right maybe but you
+61:11
+know not everyone's going to get the
+61:12
+train set so the truth is the runtime
+61:18
+classpath you know if you if you're set
+61:19
+aside you know tricky class order stuff
+61:21
+somebody has to make that class path
+61:23
+they will maybe take as input I mean
+61:24
+probably will take as input the
+61:26
+dependency tree they find from maven but
+61:28
+then they're going to have to resolve
+61:29
+things maybe human being is going to get
+61:31
+involved and say you know I know these
+61:33
+two things don't work but it's quite
+61:37
+possible that your library is going to
+61:38
+run against the set of components
+61:39
+has never ever run against right so you
+61:42
+can't say well I built this thing and it
+61:44
+works with 2.1 I don't care I need to
+61:47
+run it with 2.4 because it's running in
+61:49
+a context right that's the thing about
+61:51
+contexts is that you're not guaranteed
+61:54
+your context you get put in a different
+61:56
+context that's what context means so
+61:59
+this has an impact on testing right we
+62:02
+think we tested oh you know whatever you
+62:04
+know reproducible development
+62:07
+reproducible builds now a lot of times
+62:09
+the things that you depend on it doesn't
+62:11
+impact the bytes of your build at all
+62:15
+you're just getting some testing you
+62:18
+know with this library today but it's an
+62:23
+independent thing so you can't test
+62:25
+against an open set of consumers and you
+62:27
+can't test against changes to your
+62:29
+downstream dependencies all the time
+62:32
+which means that the actual testing you
+62:33
+do of your artifact at release time is
+62:35
+limited it should be about you know does
+62:37
+my thing do what it says you know do my
+62:40
+own tests succeed but it's not really
+62:43
+communicating a lot about the
+62:44
+dependencies because they're going to
+62:45
+change but I do think that we need a
+62:47
+higher level way to talk about artifacts
+62:50
+sets that's independent of this tree
+62:53
+right emitted lis as an application I
+62:56
+don't want to have to write an explicit
+62:59
+file with every jar that is the
+63:02
+flattening of the transitive tree but so
+63:05
+I mean how many people have ever had to
+63:06
+exclude or put in an explicit version of
+63:09
+a librarian yeah
+63:10
+and was that fun no but it should be
+63:15
+something that's more practical we
+63:16
+should be able to have tools that start
+63:18
+with the code and say you know what you
+63:20
+don't even need libraries X and Z at all
+63:23
+I'm just not going to include them and
+63:25
+your life is simpler right we should
+63:27
+have things that say we're rolling this
+63:29
+stuff up now if we if we were doing what
+63:31
+I said about names being enduring that
+63:34
+tool would have a lot more leeway and
+63:37
+what it could do it could just say I'm
+63:39
+going to use the latest of everything
+63:41
+and it could know latest without you
+63:43
+telling it as a side effect of updating
+63:45
+your depths and updating your version
+63:47
+all right
+63:50
+a hush comes over the room I mean this
+63:56
+is just
+63:56
+I had a template for the talk and said
+63:58
+insert joke here so what about web
+64:06
+services it's the same thing right so
+64:12
+people are like oh you know jars and
+64:13
+you'll man your Lego you're old we do
+64:16
+everything with Web Services now I don't
+64:18
+care about jars I don't have jar
+64:20
+versioning I do web services I just
+64:23
+talked to services right it's the same
+64:26
+thing it's the same thing it's the same
+64:29
+problems it's the same mistakes
+64:31
+everything is the same
+64:32
+how many people have versioned web
+64:34
+services you have major versions woohoo
+64:41
+and it's no better right versioning is
+64:46
+still not an answer and it's still the
+64:47
+same mistake how many people version
+64:49
+their web service when they change the
+64:51
+arguments to a function you do it I mean
+64:55
+it's okay you do it right so it's what
+64:57
+it's what industry practices people are
+64:59
+doing this right but that's that's a
+65:01
+level that's a level violation right if
+65:03
+you have an operation in your service
+65:05
+and you modify what it does it's a you
+65:07
+know it's putting on a hat your web
+65:09
+service is not a different service your
+65:11
+service provides a set of operations a
+65:13
+web service is a collection of
+65:15
+operations the end it's a collection
+65:18
+that's the end of that level the two
+65:20
+things you can do to a web service you
+65:22
+can add operations and get rid of
+65:24
+operations right then you can mess
+65:26
+around with operations and you can look
+65:29
+at them just like we looked at functions
+65:30
+what do they require what do they
+65:33
+provide is there a way to grow web
+65:36
+service operations yes especially if you
+65:40
+take these approaches about openness and
+65:42
+open specifications and open data
+65:44
+formats right is there a way to provide
+65:46
+more back from a web service and grow
+65:48
+that way totally yes as long as you have
+65:50
+expressed to your consumers I'm going to
+65:53
+give you at least this but I may give
+65:54
+you more right then we can grow together
+65:57
+right similarly you can break them in
+66:00
+the same ways requiring more providing
+66:03
+less
+66:04
+right and when you think you want to do
+66:06
+that well think twice because what
+66:11
+happens if you instead of saying I'm
+66:13
+going to break foo you make foo - right
+66:17
+well if you were going to break foo what
+66:19
+would you have to do right what happens
+66:21
+today you break foo you say we have
+66:23
+version two of our API yet to tell
+66:26
+everybody in their mother
+66:27
+version 2 of the API is coming Tuesday
+66:30
+switch here talk to this new endpoint
+66:33
+blah blah blah change your world right
+66:36
+there's no getting around that now
+66:38
+happens if you just put through - next -
+66:40
+foo you can still tell people they could
+66:44
+say I'm in Bermuda this week but next
+66:46
+week I will try foo - that sounds
+66:49
+awesome but right now my web service is
+66:53
+going to keep working because it calls
+66:55
+foo and you didn't take it away from me
+66:56
+while I was on vacation right this this
+67:00
+thing accretion solves the problem
+67:02
+exactly the same way right so what we
+67:05
+need to do is bring functional
+67:07
+programming to the library ecosystem
+67:08
+that's it we need to take this thing we
+67:10
+need to make it a good sandwich that you
+67:12
+know the top and the bottom and the
+67:14
+middle are all good right right now we
+67:18
+do update in place we excuse it with
+67:20
+this versioning thing which is just not
+67:23
+good right dependency hell is not a
+67:26
+different thing than mutability hell
+67:28
+it's the same thing it is mutability how
+67:30
+it's just at the scale right it makes
+67:34
+programming fragile but the worst thing
+67:35
+is this it makes libraries less useful
+67:37
+how many people are reluctant to take on
+67:39
+dependencies yeah I am right and it's
+67:46
+not just because like they bulk up my
+67:48
+thing it's because I'm afraid I'm afraid
+67:51
+of other people
+67:54
+but I don't want to be afraid of other
+67:57
+people and I don't think we also be
+68:00
+afraid of other people and this is the
+68:01
+thing that's really sad about this is
+68:03
+that you made your thing and you open
+68:05
+sourced it you got a slack and you were
+68:07
+feeling all really good about things but
+68:09
+people don't trust you and it's not
+68:11
+necessarily because you did anything
+68:13
+wrong it's just because they've seen
+68:14
+this happen right and like I said before
+68:17
+it's sort of a social thing now how many
+68:20
+people saying no right this all sounds
+68:23
+fine but like it's easy for me to make a
+68:26
+little piece of data immutable it's easy
+68:28
+for me to know the 42 can't change to 43
+68:30
+but at the scale you know I just have
+68:34
+new requirements all the time
+68:35
+you can't possibly make a big thing that
+68:39
+doesn't change this is just not true
+68:43
+look at these things and when try to
+68:46
+call something from the UNIX that was
+68:48
+there in 1970 something it's still there
+68:51
+it still works the same way every trying
+68:55
+to run an old Java program still works
+68:58
+right people still using same old HTML
+69:02
+still working right and I think closure
+69:05
+core also has had this you know approach
+69:08
+I don't think we've done it perfectly
+69:09
+but it's a value prop so when I keep
+69:12
+saying no and when stuffs just stays
+69:15
+there that you think oh get rid of this
+69:17
+I hate this function but this is why
+69:20
+it's still there because I don't want to
+69:22
+do that people and and I think that
+69:26
+whatever makes things successful is
+69:30
+somewhat unknown but I know that I
+69:33
+really believe that compatibility is a
+69:35
+prerequisite to being successful you
+69:37
+cannot ignore this and have something
+69:40
+that that's going to endure the people
+69:42
+are going to value and if you want
+69:43
+people to value the stuff that you write
+69:45
+you need to consider this so what would
+69:48
+happen if we never broke anything
+69:49
+names would be adorable enduringly
+69:52
+mutable a meaningful right maven central
+69:54
+I know what it does for me and will
+69:56
+always do that right this compatibility
+69:59
+checking I was talking about it would be
+70:00
+possible and we would also be able to
+70:01
+sort of just move to the latest and let
+70:03
+a testing thing that's independent of
+70:05
+any of the authors go and figure out
+70:08
+right thing figure out who needed what
+70:10
+when what the times were here's a set
+70:13
+that works because it's not going to
+70:15
+have to be afraid of these breakages
+70:17
+right we could look into fine grain
+70:19
+dependencies right which is something I
+70:22
+think is particularly interesting and
+70:23
+I'll talk about it in another slide we
+70:25
+could use the latest with impunity we do
+70:27
+that with maven central right we're not
+70:30
+like oh man I need to get at maven
+70:31
+central from three weeks ago we don't
+70:34
+ever say that right and the other thing
+70:36
+that's super critical to software dome
+70:38
+is that we can compose with impunity
+70:40
+right when we when we take two things
+70:42
+and then the third thing needs one of
+70:44
+the other things and we don't really
+70:46
+know we can put them together we can't
+70:49
+we're missing composition which is
+70:51
+something you know we value as
+70:53
+functional programmers so I think
+70:56
+there's a bunch of open challenges here
+70:58
+one is that the some changes we can't
+71:00
+see I talked earlier about arguments and
+71:04
+returns right there's not harder to see
+71:08
+then you know the presence of a function
+71:10
+or the dependency on a function
+71:11
+collections are straightforward but when
+71:14
+we start using spec more it will help
+71:16
+here because we'll be able to see in a
+71:19
+growing change to a spec that something
+71:22
+changed right the calls don't
+71:24
+necessarily look different yeah or in a
+71:26
+way that's machine detectable but the
+71:28
+spec will have change in a compatible
+71:31
+way and kept the same name well we could
+71:32
+see that happening right the spec
+71:36
+compatibility is a little bit tricky
+71:38
+right because compatibility somewhat
+71:41
+difference depending on whether or not
+71:42
+you're supplying you're providing
+71:43
+something or requiring it because you
+71:46
+can make a spec bigger or smaller and we
+71:48
+know in one case it's breaking and in
+71:51
+other case it's not so this
+71:53
+directionality is something that I want
+71:55
+to build into spec being able to
+71:58
+determine the difference this spec in
+72:00
+this context is the providing context
+72:02
+versus a requiring context I mentioned
+72:05
+repoed artifact two namespaces it would
+72:07
+be great to fix that it would be great
+72:09
+to have global registries of given this
+72:12
+namespace here's a repo here's the
+72:13
+artifact and then we can work from the
+72:16
+bottom up as opposed to I talked to Fred
+72:18
+and he said
+72:19
+use this jar and then you know I I found
+72:23
+that you know and Cantor was in it
+72:26
+that's cool yeah we shouldn't it should
+72:29
+work the other way and another big
+72:31
+problem is just it we just have tooling
+72:33
+that says do this when we have culture
+72:35
+that says do this this we solved this
+72:37
+problem we have major versions for this
+72:40
+alright so closure can help we have spec
+72:43
+I think that will lead us to flexible
+72:47
+DEP awareness right as opposed to this
+72:50
+fragile brittle thing which is talking
+72:52
+about too much we saw it was already
+72:53
+broken even at the first example maybe
+72:56
+we can do something explicit about code
+72:58
+two artifacts which I was just saying I
+73:00
+also mentioned before maybe we could be
+73:02
+you know public is not really that great
+73:04
+because a consumer of your alpha needs
+73:07
+access to something so you really need
+73:09
+to say something else when you say I'm
+73:10
+publishing this I'm making a commitment
+73:12
+now and similarly you might want to say
+73:14
+it's deprecated doesn't mean I'm going
+73:15
+to take it away it just means hey look
+73:18
+over here this food - it's better it's
+73:21
+twice as fast and you know it makes cows
+73:25
+the other thing that's going to come out
+73:27
+of this is testing based on fine-grained
+73:29
+EPS I don't want to steal Alex's thunder
+73:31
+but this is something that we're already
+73:33
+working on right because it's necessary
+73:35
+for generative testing right right now
+73:38
+you press save in your editor and like
+73:40
+all your tests run because you're
+73:41
+testing pretty useless you wrote them
+73:44
+yourself and they don't test anything
+73:45
+right but generative tests are useful
+73:49
+and but they're they take a long time
+73:51
+but the thing is who why should we ever
+73:55
+test this function more than once if we
+73:57
+didn't change this function should we
+73:58
+test it again and again and again and
+73:59
+again should I test it in you tested and
+74:02
+somebody else doesn't somebody else test
+74:03
+it this is pointless we should have
+74:04
+shah's for code and say I tested this
+74:07
+shot it's done and I tested the shot in
+74:10
+this context with this other function we
+74:11
+know what the fine-grained depths are
+74:13
+this is something that you could have
+74:15
+and then yeah you could proceed but only
+74:17
+the stuff that actually is affected by
+74:19
+what you did would get this you know
+74:22
+admittedly more expensive generative
+74:23
+testing all right I know everyone see
+74:26
+and I certainly do so what I'm going to
+74:29
+say is you should value exchange over
+74:31
+change
+74:32
+right writing libraries for other people
+74:36
+to use is about exchanging right if you
+74:39
+need to change it you need to be
+74:40
+considerate because the primary thing is
+74:42
+exchange not change right and there's
+74:45
+two really good ways to do this one is
+74:48
+to grow your software just grow it right
+74:51
+the other is to turn what would have
+74:54
+been breaking into a chrétien right in
+74:58
+other words if you're going to have a
+74:59
+variant you know give birth to a variant
+75:02
+don't muck with the thing right think of
+75:06
+the children think of the consumers and
+75:08
+that's not to say the consumers are kids
+75:10
+I mean I think to sort of think of the
+75:12
+children is less about children than it
+75:14
+is about like the future right think
+75:18
+about the future of your software do you
+75:19
+ever want to be able to change it and
+75:20
+fix it and make it better and have
+75:24
+people rely on it and like you then you
+75:29
+need to do this you need to move forward
+75:31
+without sort of trashing stuff behind
+75:33
+you and like I said I think we all could
+75:36
+do better with this and I'm certainly
+75:37
+hopeful that we'll start with some of
+75:40
+the contribs and apply some of these new
+75:42
+things but I would like closure to lead
+75:45
+in this area I think what I've described
+75:47
+is not unique to closure it's sort of
+75:50
+the industry standard and it's not great
+75:53
+so why don't we be the first community
+75:55
+to make it great that's it
+75:58
+[Applause]
+76:08
+you
+76:10
+[Applause]
+
+
