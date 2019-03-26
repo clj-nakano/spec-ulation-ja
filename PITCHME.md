@@ -360,7 +360,7 @@
 
 ---
 
-## Glowing Your Software
+## Growing Your Software
 
 - ここまできてはじめて、様々な変更の種類をを分類して見ることができるようになった。その方法がこちらである。
 
